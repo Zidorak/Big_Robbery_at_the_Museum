@@ -6,9 +6,6 @@ public class CharacterMovement : MonoBehaviour
 {
     // PlayerSpeed is the speed at which the character will move.
     public float playerSpeed = 4.0f;
-    
-    // RotationSpeed is the speed at which the character will rotate.
-    // public float rotationSpeed = 6.0f;
 
     // We create an entry for the character's collider.
     public CharacterController character;
@@ -39,20 +36,6 @@ public class CharacterMovement : MonoBehaviour
 
         // With the values of the Z and X Axis, we transform.Translate which will move the player forward/backwards and left/right.
         transform.Translate(zValue * playerSpeed, 0f, xValue * playerSpeed);
-
-
-        // The following lines have been commented because they don't work with the camera movement. BUT they can be use on another script for another type of game.
-        
-
-        // In order to rotate, we have to get the rotation on the Y Axis and multiply it by the rotationSpeed.
-        // float rotationY = Input.GetAxis("Horizontal") * rotationSpeed;
-
-        // The rotation of the Y Axis is multiply by Time.deltaTime.
-        //rotationY *= Time.deltaTime;
-
-        // Rotate around our Y Axis.
-        // transform.Rotate(0, rotationY, 0);
-
     }
 
 
