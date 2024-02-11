@@ -9,7 +9,6 @@ public class FlashLight : MonoBehaviour
     // We get the flash light, which is a spot light.
     [SerializeField] Light flashLight;
 
-
     // Variable created to set the maximum amount of batteries we can have.
     [SerializeField] private int maxBatteryCount = 3;
 
@@ -50,7 +49,7 @@ public class FlashLight : MonoBehaviour
     {
         if (other.CompareTag("Battery"))
         {
-            GameObject.Destroy(other.transform.parent.gameObject);
+            GameObject.Destroy(other.transform.gameObject);
             AddBattery();
         }
     }

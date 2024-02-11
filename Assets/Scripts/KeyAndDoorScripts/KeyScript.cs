@@ -8,8 +8,6 @@ using UnityEngine.SceneManagement;
 
 public class KeyScript : MonoBehaviour
 {
-    public PrefabAssetType key;
-
     public int currentKeyCount = 0;
 
     public int maxKeyCount = 4;
@@ -47,11 +45,9 @@ public class KeyScript : MonoBehaviour
 
     void OpenDoor()
     {
-        GetComponentInParent<PrefabAssetType>();
 
         if (hasKey == true && doorOpened == false)
         {
-            GetComponentInParent<PrefabAssetType>();
             // Get the rotation velocity of the door so it can be used to open and/or close the door within a specific amount of time.
             // Make the door move 75 degrees on the Y axis.
             // Make the door move -75 degrees on the Y axis IF you want to close the door.
@@ -66,14 +62,17 @@ public class KeyScript : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Key"))
+        if (other.CompareTag("Key"))
         {
-            //Destroy(gameObject.GetComponentInParent.PrerfabAssetType);
-            Destroy(gameObject);
-
+            GameObject.Destroy(other.transform.gameObject);
+            AddKey();
         }
+    }
+
+    private void AddKey()
+    {
         if (currentKeyCount < maxKeyCount)
         {
             currentKeyCount++;
