@@ -61,16 +61,6 @@ public class FlashLight : MonoBehaviour
         {
             flashLight.enabled = true;
         }
-
-        //if (currentBatteries > 0)
-        //{
-          //  float intensityPercent = (float)currentBatteries / (float)maxBatteryCount;
-            
-            //float intensityFactor = maxIntensity * intensityPercent;
-
-            //flashLight.intensity = intensityFactor;
-            //flashLight.enabled = true;
-        //}
     }
 
     void Off()
@@ -97,6 +87,4 @@ public class FlashLight : MonoBehaviour
             flashLight.intensity = currentIntensity;
         }
     }
-
-   
 }
