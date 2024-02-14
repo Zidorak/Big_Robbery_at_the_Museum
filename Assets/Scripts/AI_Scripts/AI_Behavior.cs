@@ -71,4 +71,11 @@ public class AI_Behavior : MonoBehaviour
             currentState = State.Explore;
         }
     }
+
+    /* Make a behaviour tree including all of those states from this script. 
+       Then, apply the KeyScript and the TorchLight script so the AI can access those mechanics too.
+       The AI will look for Batteries and keys, whatever it needs first, then it will look for doors,
+       then it will look for the main goal, unless it has everything else, so then it will look for the goal
+       straight away. */
+    
 }

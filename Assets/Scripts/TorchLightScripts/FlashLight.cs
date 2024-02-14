@@ -21,6 +21,13 @@ public class FlashLight : MonoBehaviour
     // Variable created to see how much intensity does the torchlight currently have.
     [SerializeField] private float maxIntensity = 3;
 
+    // Variable created to manage the life time of the batteries.
+    public float timeSpeed;
+
+    // Condition created to see if the light is on or off.
+    private bool lightOn;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,12 +42,32 @@ public class FlashLight : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             On();
+            lightOn = true;
         }
+
+        if (lightOn == true)
+        {
+            FlashLightIntensity();
+        }
+
         if (Input.GetKeyDown(KeyCode.R))
         {
             Off();
+            lightOn = false;
         }
+        // Check to dispose of used batteries.
 
+        if (currentIntensity > 1 && currentIntensity < 3)
+        {
+
+            //currentIntensity = 2;
+            currentBatteries = 2;
+        }
+        else if (currentIntensity > 1 && currentIntensity < 2)
+        {
+            //currentIntensity = 1;
+            currentBatteries = 1;
+        }
     }
     /* OnTriggerEnter uses a collider to compare the tag, which in this case is "Battery",
        then, if it matches the tag during collision, the object (battery) gets destroyed and 
@@ -81,10 +108,24 @@ public class FlashLight : MonoBehaviour
         /* If the currentIntensity is less or equal to the maxIntensity, then the currentIntensity 
            will match the currentBatteries. Finally the intensity component of the flasLight will 
            be equal to the currentIntensity */
-        if (currentIntensity <= maxIntensity)
+        if (currentIntensity < maxIntensity)
         {
             currentIntensity = currentBatteries;
             flashLight.intensity = currentIntensity;
         }
+    }
+
+    // This function will handle the intensity of the flashlight, which will get lower after some time.
+    void FlashLightIntensity()
+    {
+        // We have to make the light decays after a fixed time, dropping its intensity when on.
+        if (flashLight.intensity > 0)
+        {
+            // Get the time inside the game and try to drop the intensity while the light is on.
+
+            flashLight.intensity -= Time.deltaTime * currentIntensity * timeSpeed;
+        }
+
+     
     }
 }

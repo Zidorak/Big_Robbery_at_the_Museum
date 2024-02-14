@@ -48,6 +48,7 @@ public class KeyScript : MonoBehaviour
 
         if (hasKey == true && doorOpened == false)
         {
+            // ("Door locked")
             // Get the rotation velocity of the door so it can be used to open and/or close the door within a specific amount of time.
             // Make the door move 75 degrees on the Y axis.
             // Make the door move -75 degrees on the Y axis IF you want to close the door.
