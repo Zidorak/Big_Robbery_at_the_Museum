@@ -55,30 +55,6 @@ public class FlashLight : MonoBehaviour
             Off();
             lightOn = false; // The boolean created turns to false after the light turns off.
         }
-        
-        // Check to dispose of used batteries.
-       // if (currentIntensity > 3 && currentIntensity < 4)
-        //{
-          //  currentIntensity = 3;
-            //currentBatteries = 3;
-            //currentBatteries--;
-            //currentIntensity--;
-        //}
-        if (currentIntensity > 1 && currentIntensity < 3)
-        {
-
-            flashLight.intensity = 2;
-            currentBatteries = 2;
-            currentBatteries--;
-            currentIntensity--;
-        }
-        else if (currentIntensity > 1 && currentIntensity < 2)
-        {
-            flashLight.intensity = 1;
-            currentBatteries = 1;
-            currentBatteries--;
-            currentIntensity--;
-        }
     }
 
     /* OnTriggerEnter uses a collider to compare the tag, which in this case is "Battery",
@@ -130,6 +106,37 @@ public class FlashLight : MonoBehaviour
     // This function will handle the intensity of the flashlight, which will get lower after some time.
     void FlashLightIntensity()
     {
+        // Check to dispose of used batteries.
+        if (currentIntensity < 0.1)
+        {
+
+            flashLight.intensity = 0;
+            currentBatteries = 0;
+            //currentBatteries--;
+            //currentIntensity--;
+        }
+        else if (currentIntensity < 2)
+        {
+            flashLight.intensity = 1;
+            currentBatteries = 1;
+            //currentBatteries--;
+            //currentIntensity--;
+        }
+        else if (currentIntensity < 3)
+        {
+            flashLight.intensity = 2;
+            currentBatteries = 2;
+            //currentBatteries--;
+            //currentIntensity--;
+        }
+        else if (currentIntensity == 3)
+        {
+            flashLight.intensity = 3;
+            currentBatteries = 3;
+            //currentBatteries--;
+            //currentIntensity--;
+        }
+
         // We have to make the light decays after a fixed time, dropping its intensity when on.
         if (flashLight.intensity > 0)
         {
