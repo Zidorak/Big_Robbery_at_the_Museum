@@ -19,17 +19,18 @@ public class AI_Behavior : MonoBehaviour
     // We create a private Enum to determine what states are there for the AI to access.
     private enum State
     {
-        Explore, // The AI walks around.
-        OpenDoor, // If the AI spots a door, it will walk to it and open it.
-        PickUp, // If the AI spots an item, it will pick it up.
-        Return // If the AI picks up an item, or doesn't find an item inside a room, it will walk out of the room.
+        LookForKeys, // The AI walks around.
+        PickUpBattery, // If the AI spots a door, it will walk to it and open it.
+        OpenDoors, // If the AI spots an item, it will pick it up.
+        InRoom, // If the AI picks up an item, or doesn't find an item inside a room, it will walk out of the room.
+        OutOfRoom 
     }
 
     // Start is called before the first frame update
     void Start()
     {
         // We define the State "Explore" so the AI starts walking looking for doors to open or pick up items 
-        currentState = State.Explore;
+        currentState = State.LookForKeys;
 
         // We get a reference to the NavMeshAgent.
         agent = GetComponent<NavMeshAgent>();
@@ -40,36 +41,28 @@ public class AI_Behavior : MonoBehaviour
     {
         agent.destination = moveToGoal.position;
 
-        switch (currentState) // Since the currentState is "Explore", we start the switch statement with it.
+        switch (currentState) // Since the currentState is "LookForKeys", we start the switch statement with it.
         {
-            case State.Explore: // At the start of the game, the AI will explore (walk), and look for doors to open.
+            case State.LookForKeys: // At the start of the game, the AI will look for keys to open doors.
                 break;
 
-            case State.OpenDoor: // When a door is spotted, the AI will walk to it, open it and enter the room.
+            case State.PickUpBattery: // When a battery is spotted, the AI will walk to it and pick it up.
                 break;
 
-            case State.PickUp: // Inside the rooms, the AI will look for items to pick up, if there are none, it will walk out.
+            case State.OpenDoors: // If the AI has a key, it will open a door that is in front of it.
                 break;
 
-            case State.Return: // AI will walk out of a room and return to "Explore" state.
+            case State.InRoom: // Inside a room, the AI will look for items to pick up, or the statue (goal).
+                break;
+
+            case State.OutOfRoom: // If the AI has picked up all the items in a room or hasn't found anything, it will exit the room.
                 break;
         }
     }
 
     public void switchState()
     {
-        if (currentState == State.Explore)
-        {
-            currentState = State.OpenDoor;
-        }
-        else if (currentState == State.OpenDoor)
-        {
-            currentState = State.PickUp;
-        }
-        else
-        {
-            currentState = State.Explore;
-        }
+        
     }
 
     /* Make a behaviour tree including all of those states from this script. 
