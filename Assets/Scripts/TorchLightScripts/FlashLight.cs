@@ -42,33 +42,45 @@ public class FlashLight : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             On();
-            lightOn = true;
+            lightOn = true; // The boolean created turns to true after the light turns on.
         }
 
         if (lightOn == true)
         {
-            FlashLightIntensity();
+            FlashLightIntensity(); // If the boolean is true, then we run FlashLightIntensity().
         }
 
         if (Input.GetKeyDown(KeyCode.R))
         {
             Off();
-            lightOn = false;
+            lightOn = false; // The boolean created turns to false after the light turns off.
         }
+        
         // Check to dispose of used batteries.
-
+       // if (currentIntensity > 3 && currentIntensity < 4)
+        //{
+          //  currentIntensity = 3;
+            //currentBatteries = 3;
+            //currentBatteries--;
+            //currentIntensity--;
+        //}
         if (currentIntensity > 1 && currentIntensity < 3)
         {
 
-            //currentIntensity = 2;
+            flashLight.intensity = 2;
             currentBatteries = 2;
+            currentBatteries--;
+            currentIntensity--;
         }
         else if (currentIntensity > 1 && currentIntensity < 2)
         {
-            //currentIntensity = 1;
+            flashLight.intensity = 1;
             currentBatteries = 1;
+            currentBatteries--;
+            currentIntensity--;
         }
     }
+
     /* OnTriggerEnter uses a collider to compare the tag, which in this case is "Battery",
        then, if it matches the tag during collision, the object (battery) gets destroyed and 
        finally calls the AddBattery function. */
@@ -108,7 +120,7 @@ public class FlashLight : MonoBehaviour
         /* If the currentIntensity is less or equal to the maxIntensity, then the currentIntensity 
            will match the currentBatteries. Finally the intensity component of the flasLight will 
            be equal to the currentIntensity */
-        if (currentIntensity < maxIntensity)
+        if (currentIntensity <= maxIntensity)
         {
             currentIntensity = currentBatteries;
             flashLight.intensity = currentIntensity;
@@ -121,11 +133,8 @@ public class FlashLight : MonoBehaviour
         // We have to make the light decays after a fixed time, dropping its intensity when on.
         if (flashLight.intensity > 0)
         {
-            // Get the time inside the game and try to drop the intensity while the light is on.
-
+            // Get time and try to drop the intensity while the light is on.
             flashLight.intensity -= Time.deltaTime * currentIntensity * timeSpeed;
         }
-
-     
     }
 }
