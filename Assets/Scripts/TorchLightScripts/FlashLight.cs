@@ -13,10 +13,10 @@ public class FlashLight : MonoBehaviour
     [SerializeField] private int maxBatteryCount = 3;
 
     // Variable created to see how many batteries we currently have.
-    [SerializeField] private int currentBatteries;
+    [SerializeField] private int currentBatteries = 0;
 
     // Variable created to see what's the current intensity of the torchlight.
-    [SerializeField] private int currentIntensity;
+    [SerializeField] private int currentIntensity = 0;
 
     // Variable created to see how much intensity does the torchlight currently have.
     [SerializeField] private float maxIntensity = 3;
@@ -26,6 +26,8 @@ public class FlashLight : MonoBehaviour
 
     // Condition created to see if the light is on or off.
     private bool lightOn;
+
+    private bool emptyBattery;
 
 
     // Start is called before the first frame update
@@ -43,12 +45,20 @@ public class FlashLight : MonoBehaviour
         {
             On();
             lightOn = true; // The boolean created turns to true after the light turns on.
+            if (emptyBattery == true)
+            {   
+                FlashLightIntensity();
+                currentBatteries = currentBatteries - 1;
+                currentIntensity = currentIntensity - 1;
+            }
         }
 
         if (lightOn == true)
         {
             FlashLightIntensity(); // If the boolean is true, then we run FlashLightIntensity().
         }
+
+     
 
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -65,6 +75,7 @@ public class FlashLight : MonoBehaviour
         if (other.CompareTag("Battery"))
         {
             GameObject.Destroy(other.transform.gameObject);
+            currentBatteries++;
             AddBattery();
         }
     }
@@ -91,7 +102,7 @@ public class FlashLight : MonoBehaviour
         {
             return;
         }
-        currentBatteries++;
+        
         
         /* If the currentIntensity is less or equal to the maxIntensity, then the currentIntensity 
            will match the currentBatteries. Finally the intensity component of the flasLight will 
@@ -107,41 +118,68 @@ public class FlashLight : MonoBehaviour
     void FlashLightIntensity()
     {
         // Check to dispose of used batteries.
-        if (currentIntensity < 0.1)
-        {
+       // if (currentIntensity < 0.1)
+       // {
 
-            flashLight.intensity = 0;
-            currentBatteries = 0;
+         //   flashLight.intensity = 0;
+           // currentBatteries = 0;
             //currentBatteries--;
             //currentIntensity--;
-        }
-        else if (currentIntensity < 2)
-        {
-            flashLight.intensity = 1;
-            currentBatteries = 1;
+        //}
+        //else if (currentIntensity < 2)
+        //{
+          //  flashLight.intensity = 1;
+            //currentBatteries = 1;
             //currentBatteries--;
             //currentIntensity--;
-        }
-        else if (currentIntensity < 3)
-        {
-            flashLight.intensity = 2;
-            currentBatteries = 2;
+        //}
+        //else if (currentIntensity < 3)
+        //{
+          //  flashLight.intensity = 2;
+            //currentBatteries = 2;
             //currentBatteries--;
             //currentIntensity--;
-        }
-        else if (currentIntensity == 3)
-        {
-            flashLight.intensity = 3;
-            currentBatteries = 3;
+       // }
+        //else if (currentIntensity == 3)
+        //{
+           // flashLight.intensity = 3;
+            //currentBatteries = 3;
             //currentBatteries--;
             //currentIntensity--;
-        }
+       // }
 
         // We have to make the light decays after a fixed time, dropping its intensity when on.
         if (flashLight.intensity > 0)
         {
             // Get time and try to drop the intensity while the light is on.
             flashLight.intensity -= Time.deltaTime * currentIntensity * timeSpeed;
+            
+            if (flashLight.intensity <= 0.1)
+            {
+                currentBatteries = 0;
+                emptyBattery = true;
+            }
+            if (flashLight.intensity <= 1)
+            {
+                currentBatteries = 1;
+                emptyBattery = true;
+            }
+            if (flashLight.intensity <= 2)
+            {
+                currentBatteries = 2;
+                emptyBattery = true;
+            }
+            if (flashLight.intensity == 3)
+            {
+                currentBatteries = 3;
+                emptyBattery = true;
+            }
         }
     }
+    /* I've tried creating a new boolean called emptyBaterry
+       to check if the player has an empty battery and then dispose it.
+       I've also plugged the if statements inside the big IF with Time.deltaTime. 
+       Just to see if it was possible to fix the issue, which didn't work.
+       Now the batteries don't go down, the intensity goes up
+       and the intensity on the script goes down, but keeps going below 0. */
 }
