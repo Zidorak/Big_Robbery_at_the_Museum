@@ -19,7 +19,7 @@ public class AI_Behavior : MonoBehaviour
     // We create a private Enum to determine what states are there for the AI to access.
     private enum State
     {
-        LookForKeys, // The AI walks around.
+        LookForBatteries, // The AI walks around.
         PickUpBattery, // If the AI spots a door, it will walk to it and open it.
         OpenDoors, // If the AI spots an item, it will pick it up.
         InRoom, // If the AI picks up an item, or doesn't find an item inside a room, it will walk out of the room.
@@ -30,7 +30,7 @@ public class AI_Behavior : MonoBehaviour
     void Start()
     {
         // We define the State "Explore" so the AI starts walking looking for doors to open or pick up items 
-        currentState = State.LookForKeys;
+        currentState = State.LookForBatteries;
 
         // We get a reference to the NavMeshAgent.
         agent = GetComponent<NavMeshAgent>();
@@ -43,7 +43,7 @@ public class AI_Behavior : MonoBehaviour
 
         switch (currentState) // Since the currentState is "LookForKeys", we start the switch statement with it.
         {
-            case State.LookForKeys: // At the start of the game, the AI will look for keys to open doors.
+            case State.LookForBatteries: // At the start of the game, the AI will look for keys to open doors.
                 break;
 
             case State.PickUpBattery: // When a battery is spotted, the AI will walk to it and pick it up.

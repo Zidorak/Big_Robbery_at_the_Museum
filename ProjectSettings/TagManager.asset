@@ -6,6 +6,9 @@ TagManager:
   tags:
   - AI
   - Battery
+  - Door
+  - Key
+  - Reach
   layers:
   - Default
   - TransparentFX

@@ -27,7 +27,7 @@ public class FlashLight : MonoBehaviour
     // Condition created to see if the light is on or off.
     private bool lightOn;
 
-    private bool emptyBattery;
+    private bool spaceAvailable;
 
 
     // Start is called before the first frame update
@@ -35,6 +35,7 @@ public class FlashLight : MonoBehaviour
     {
         // We set the torchlight to be off at the start of the game.
         flashLight.enabled = false;
+        spaceAvailable = true;
     }
 
     // Update is called once per frame
@@ -45,12 +46,6 @@ public class FlashLight : MonoBehaviour
         {
             On();
             lightOn = true; // The boolean created turns to true after the light turns on.
-            if (emptyBattery == true)
-            {   
-                FlashLightIntensity();
-                currentBatteries = currentBatteries - 1;
-                currentIntensity = currentIntensity - 1;
-            }
         }
 
         if (lightOn == true)
@@ -72,7 +67,7 @@ public class FlashLight : MonoBehaviour
        finally calls the AddBattery function. */
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Battery"))
+        if (other.CompareTag("Battery") && spaceAvailable == true)
         {
             GameObject.Destroy(other.transform.gameObject);
             currentBatteries++;
@@ -97,83 +92,81 @@ public class FlashLight : MonoBehaviour
 
     void AddBattery()
     {
-        // We use this method to add batteries.
-        if (currentBatteries >= maxBatteryCount)
-        {
-            return;
-        }
-        
-        
         /* If the currentIntensity is less or equal to the maxIntensity, then the currentIntensity 
-           will match the currentBatteries. Finally the intensity component of the flasLight will 
-           be equal to the currentIntensity */
+        will match the currentBatteries. Finally the intensity component of the flasLight will 
+        be equal to the currentIntensity */
         if (currentIntensity <= maxIntensity)
         {
             currentIntensity = currentBatteries;
             flashLight.intensity = currentIntensity;
         }
+
+        // We use this method to add batteries.
+        if (currentBatteries == maxBatteryCount)
+        {
+            spaceAvailable = false;
+            return;
+        }
+        
+        
+     
     }
 
     // This function will handle the intensity of the flashlight, which will get lower after some time.
     void FlashLightIntensity()
     {
-        // Check to dispose of used batteries.
-       // if (currentIntensity < 0.1)
-       // {
-
-         //   flashLight.intensity = 0;
-           // currentBatteries = 0;
-            //currentBatteries--;
-            //currentIntensity--;
-        //}
-        //else if (currentIntensity < 2)
-        //{
-          //  flashLight.intensity = 1;
-            //currentBatteries = 1;
-            //currentBatteries--;
-            //currentIntensity--;
-        //}
-        //else if (currentIntensity < 3)
-        //{
-          //  flashLight.intensity = 2;
-            //currentBatteries = 2;
-            //currentBatteries--;
-            //currentIntensity--;
-       // }
-        //else if (currentIntensity == 3)
-        //{
-           // flashLight.intensity = 3;
-            //currentBatteries = 3;
-            //currentBatteries--;
-            //currentIntensity--;
-       // }
-
         // We have to make the light decays after a fixed time, dropping its intensity when on.
         if (flashLight.intensity > 0)
         {
             // Get time and try to drop the intensity while the light is on.
             flashLight.intensity -= Time.deltaTime * currentIntensity * timeSpeed;
             
-            if (flashLight.intensity <= 0.1)
+            if (flashLight.intensity <= 0.1f)
             {
                 currentBatteries = 0;
-                emptyBattery = true;
+                if (flashLight.intensity == 0.1f)
+                {
+                    currentBatteries--;
+                    flashLight.intensity--;
+                }
             }
-            if (flashLight.intensity <= 1)
+            if (flashLight.intensity <= 1 && flashLight.intensity > 0.1f)
             {
                 currentBatteries = 1;
-                emptyBattery = true;
+                if (flashLight.intensity == 1f)
+                {
+                    currentBatteries--;
+                    flashLight.intensity--;
+                }
             }
-            if (flashLight.intensity <= 2)
+            if (flashLight.intensity <= 2f && flashLight.intensity > 1f)
             {
                 currentBatteries = 2;
-                emptyBattery = true;
+                if (flashLight.intensity == 2f)
+                {
+                    currentBatteries--;
+                    flashLight.intensity--;
+                }
             }
-            if (flashLight.intensity == 3)
+            if (flashLight.intensity <= 3f && flashLight.intensity > 2f)
             {
                 currentBatteries = 3;
-                emptyBattery = true;
+                if (flashLight.intensity == 3f)
+                {
+                    currentBatteries--;
+                    flashLight.intensity--;
+                }
             }
+        }
+        if (flashLight.intensity == 0)
+        {
+            currentIntensity = 0;
+            spaceAvailable = true;
+        }
+        if (currentBatteries == 3 && flashLight.intensity == 3f)
+        {
+            spaceAvailable = false;
+            return;
         }
     }
     /* I've tried creating a new boolean called emptyBaterry
