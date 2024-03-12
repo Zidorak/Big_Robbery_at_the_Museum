@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class FlashLight : MonoBehaviour
@@ -16,10 +12,10 @@ public class FlashLight : MonoBehaviour
     [SerializeField] private int currentBatteries = 0;
 
     // Variable created to see what's the current intensity of the torchlight.
-    [SerializeField] private int currentIntensity = 0;
+   // private int currentIntensity = 0;
 
     // Variable created to see how much intensity does the torchlight currently have.
-    [SerializeField] private float maxIntensity = 3;
+    // [SerializeField] private float maxIntensity = 3;
 
     // Variable created to manage the life time of the batteries.
     public float timeSpeed;
@@ -29,6 +25,18 @@ public class FlashLight : MonoBehaviour
 
     private bool spaceAvailable;
 
+    private State intensityState;
+
+    private enum State
+    {
+        Battery0,
+        Battery1,
+        Battery2,
+        Battery3
+    }
+
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +44,8 @@ public class FlashLight : MonoBehaviour
         // We set the torchlight to be off at the start of the game.
         flashLight.enabled = false;
         spaceAvailable = true;
+       // currentBatteries = currentIntensity;
+        intensityState = State.Battery0;
     }
 
     // Update is called once per frame
@@ -53,12 +63,20 @@ public class FlashLight : MonoBehaviour
             FlashLightIntensity(); // If the boolean is true, then we run FlashLightIntensity().
         }
 
-     
+
 
         if (Input.GetKeyDown(KeyCode.R))
         {
             Off();
             lightOn = false; // The boolean created turns to false after the light turns off.
+        }
+
+        if (flashLight.intensity > 3f)
+        {
+            spaceAvailable = false;
+            Debug.Log("Battery = 3");
+            flashLight.intensity = 3f;
+            intensityState = State.Battery3;
         }
     }
 
@@ -70,7 +88,7 @@ public class FlashLight : MonoBehaviour
         if (other.CompareTag("Battery") && spaceAvailable == true)
         {
             GameObject.Destroy(other.transform.gameObject);
-            currentBatteries++;
+            flashLight.intensity++;
             AddBattery();
         }
     }
@@ -78,7 +96,7 @@ public class FlashLight : MonoBehaviour
     void On()
     {
         // The light is enabled.
-        if (currentBatteries > 0)
+        if (flashLight.intensity > 0)
         {
             flashLight.enabled = true;
         }
@@ -88,84 +106,156 @@ public class FlashLight : MonoBehaviour
     {
         // The light is disabled. 
         flashLight.enabled = false;
+
+        if (flashLight.intensity == 0)
+        {
+            currentBatteries = 0;
+            spaceAvailable = true;
+            Debug.Log("No battery");
+            flashLight.enabled = false;
+            lightOn = false;
+        }
     }
 
     void AddBattery()
     {
-        /* If the currentIntensity is less or equal to the maxIntensity, then the currentIntensity 
-        will match the currentBatteries. Finally the intensity component of the flasLight will 
-        be equal to the currentIntensity */
-        if (currentIntensity <= maxIntensity)
+        /*  */
+        if (currentBatteries < maxBatteryCount && spaceAvailable == true)
         {
-            currentIntensity = currentBatteries;
-            flashLight.intensity = currentIntensity;
+            spaceAvailable = true;
+            currentBatteries++;
         }
 
-        // We use this method to add batteries.
         if (currentBatteries == maxBatteryCount)
         {
             spaceAvailable = false;
+            Debug.Log("Battery = 3 You have no more space");
             return;
         }
-        
-        
-     
     }
 
     // This function will handle the intensity of the flashlight, which will get lower after some time.
     void FlashLightIntensity()
     {
         // We have to make the light decays after a fixed time, dropping its intensity when on.
-        if (flashLight.intensity > 0)
+
+        flashLight.intensity -= Time.deltaTime * timeSpeed; // COMEBACK TO THIS!!!
+
+        switch (intensityState)
         {
-            // Get time and try to drop the intensity while the light is on.
-            flashLight.intensity -= Time.deltaTime * currentIntensity * timeSpeed;
-            
-            if (flashLight.intensity <= 0.1f)
-            {
-                currentBatteries = 0;
-                if (flashLight.intensity == 0.1f)
+            case State.Battery0:
+
+                Debug.Log("Battery = 0");
+
+                if (flashLight.intensity == 0f)
                 {
-                    currentBatteries--;
-                    flashLight.intensity--;
+                    spaceAvailable = true;
+                    flashLight.enabled = false;
+                    Off();
                 }
-            }
-            if (flashLight.intensity <= 1 && flashLight.intensity > 0.1f)
-            {
-                currentBatteries = 1;
-                if (flashLight.intensity == 1f)
-                {
-                    currentBatteries--;
-                    flashLight.intensity--;
-                }
-            }
-            if (flashLight.intensity <= 2f && flashLight.intensity > 1f)
-            {
-                currentBatteries = 2;
-                if (flashLight.intensity == 2f)
-                {
-                    currentBatteries--;
-                    flashLight.intensity--;
-                }
-            }
-            if (flashLight.intensity <= 3f && flashLight.intensity > 2f)
-            {
-                currentBatteries = 3;
-                if (flashLight.intensity == 3f)
-                {
-                    currentBatteries--;
-                    flashLight.intensity--;
-                }
-            }
+                break;
         }
-        if (flashLight.intensity == 0)
+
+
+
+        switch (intensityState)
         {
-            currentIntensity = 0;
-            spaceAvailable = true;
+            case State.Battery1:
+
+                Debug.Log("Battery = 1");
+
+                if (flashLight.intensity <= 1.5f && flashLight.intensity > 0.1f)
+                {
+                    spaceAvailable = true;
+                    //flashLight.intensity -= Time.deltaTime * currentIntensity * timeSpeed;
+                }
+
+                if (flashLight.intensity <= 0.1f)
+                {
+                    //flashLight.intensity -= Time.deltaTime * currentIntensity * timeSpeed;
+
+
+                    intensityState = State.Battery0;
+                }
+                //currentBatteries = currentBatteries - 1;
+                break;
         }
-        if (currentBatteries == 3 && flashLight.intensity == 3f)
+
+
+
+        switch (intensityState)
+        {
+            case State.Battery2:
+
+                Debug.Log("Battery = 2");
+
+                if (flashLight.intensity <= 2 && flashLight.intensity > 1.5f)
+                {
+                    spaceAvailable = true;
+                    //flashLight.intensity -= Time.deltaTime * currentIntensity * timeSpeed;
+                }
+
+                if (flashLight.intensity <= 1.5f)
+                {
+                    //flashLight.intensity -= Time.deltaTime * currentIntensity * timeSpeed;
+
+
+                    intensityState = State.Battery1;
+                }
+                //currentBatteries = currentBatteries - 1;
+                break;
+        }
+
+
+
+        switch (intensityState)
+        {
+            case State.Battery3:
+
+                if (flashLight.intensity <= 2.9 && flashLight.intensity > 2f)
+                {
+                    spaceAvailable = false;
+                    //flashLight.intensity -= Time.deltaTime * currentIntensity * timeSpeed;
+                }
+
+                if (flashLight.intensity <= 2f)
+                {
+                    //flashLight.intensity -= Time.deltaTime * currentIntensity * timeSpeed;
+
+
+                    intensityState = State.Battery2;
+                }
+
+                break;
+        }
+
+        if (flashLight.intensity > 2.9f)
         {
             spaceAvailable = false;
+            //flashLight.intensity -= Time.deltaTime * currentIntensity * timeSpeed;
+            Debug.Log("Battery = 3");
+            intensityState = State.Battery3;
+        }
+
+
+        if (intensityState == State.Battery0)
+        {
+            currentBatteries = 0;
+        }
+        else if (intensityState == State.Battery1)
+        {
+            currentBatteries = 1;
+        }
+        else if (intensityState == State.Battery2)
+        {
+            currentBatteries = 2;
+        }
+        else if (intensityState == State.Battery3)
+        {
+            currentBatteries = 3;
+        }
+        else
+        {
             return;
         }
     }

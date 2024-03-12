@@ -3183,8 +3183,6 @@ MonoBehaviour:
   flashLight: {fileID: 1546963815}
   maxBatteryCount: 3
   currentBatteries: 0
-  currentIntensity: 0
-  maxIntensity: 3
   timeSpeed: 0.1
 --- !u!114 &1468157382
 MonoBehaviour:
