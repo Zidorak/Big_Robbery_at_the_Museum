@@ -11,22 +11,19 @@ public class FlashLight : MonoBehaviour
     // Variable created to see how many batteries we currently have.
     [SerializeField] private int currentBatteries = 0;
 
-    // Variable created to see what's the current intensity of the torchlight.
-   // private int currentIntensity = 0;
-
-    // Variable created to see how much intensity does the torchlight currently have.
-    // [SerializeField] private float maxIntensity = 3;
-
     // Variable created to manage the life time of the batteries.
     public float timeSpeed;
 
     // Condition created to see if the light is on or off.
     private bool lightOn;
 
+    // Condition created to see if the player has space for more batteries or not.
     private bool spaceAvailable;
 
+    // State machine to handle the intensity of the flash light with 4 different states.
     private State intensityState;
 
+    // States
     private enum State
     {
         Battery0,
@@ -35,16 +32,16 @@ public class FlashLight : MonoBehaviour
         Battery3
     }
 
-
-
-
     // Start is called before the first frame update
     void Start()
     {
         // We set the torchlight to be off at the start of the game.
         flashLight.enabled = false;
+        
+        // We set the space available to true so the player can start picking batteries up. 
         spaceAvailable = true;
-       // currentBatteries = currentIntensity;
+
+        // We set the state to be Battery0.
         intensityState = State.Battery0;
     }
 
@@ -107,6 +104,9 @@ public class FlashLight : MonoBehaviour
         // The light is disabled. 
         flashLight.enabled = false;
 
+        /* If the intensity is 0, then currentBatteries is 0,
+           there is space to pick up batteries,
+           the flashlight gets disabled and it turns off if it was on. */
         if (flashLight.intensity == 0)
         {
             currentBatteries = 0;
@@ -119,13 +119,15 @@ public class FlashLight : MonoBehaviour
 
     void AddBattery()
     {
-        /*  */
+        /* If the currentBatteries is less than the 3 and the space is available,  
+           keep the available space and increase the currentBatteries by 1. */
         if (currentBatteries < maxBatteryCount && spaceAvailable == true)
         {
             spaceAvailable = true;
             currentBatteries++;
         }
 
+        // If the currentBatteries is 3, there is no more space for batteries.
         if (currentBatteries == maxBatteryCount)
         {
             spaceAvailable = false;
@@ -137,107 +139,114 @@ public class FlashLight : MonoBehaviour
     // This function will handle the intensity of the flashlight, which will get lower after some time.
     void FlashLightIntensity()
     {
-        // We have to make the light decays after a fixed time, dropping its intensity when on.
+        /* We have to make the light decays with time, dropping its intensity when on, so we
+           decrease flashlight intensity with Time.deltaTime multiplied by timeSpeed.*/
+        flashLight.intensity -= Time.deltaTime * timeSpeed;  
 
-        flashLight.intensity -= Time.deltaTime * timeSpeed; // COMEBACK TO THIS!!!
-
+        // Inside FlashLightIntensity() is where we handle the logic of the state machines.
         switch (intensityState)
         {
+            // State accessed when currentBatteries is 0.
             case State.Battery0:
 
                 Debug.Log("Battery = 0");
 
+                /* When the intensity of the flashlight is 0, we turn off the flashlight
+                   and make space available to true. */
                 if (flashLight.intensity == 0f)
                 {
                     spaceAvailable = true;
                     flashLight.enabled = false;
                     Off();
                 }
-                break;
+                
+            break;
         }
 
 
-
+        
         switch (intensityState)
         {
+            // State accessed when currentBatteries is 1.
             case State.Battery1:
 
                 Debug.Log("Battery = 1");
 
+                /* When the intensity of the flashlight is less or equal to 1.5
+                   and more than 0.1, we keep the space available to true. */
                 if (flashLight.intensity <= 1.5f && flashLight.intensity > 0.1f)
                 {
                     spaceAvailable = true;
-                    //flashLight.intensity -= Time.deltaTime * currentIntensity * timeSpeed;
                 }
 
+                // When the intensity is less or equal to 0.1, we change state to Battery0.
                 if (flashLight.intensity <= 0.1f)
                 {
-                    //flashLight.intensity -= Time.deltaTime * currentIntensity * timeSpeed;
-
-
                     intensityState = State.Battery0;
                 }
-                //currentBatteries = currentBatteries - 1;
-                break;
+                
+            break;
         }
 
 
 
         switch (intensityState)
         {
+            // State accessed when currentBatteries is 2.
             case State.Battery2:
 
                 Debug.Log("Battery = 2");
 
+                /* When the intensity of the flashlight is less or equal to 2
+                   and more than 1.5, we keep the space available to true. */
                 if (flashLight.intensity <= 2 && flashLight.intensity > 1.5f)
                 {
                     spaceAvailable = true;
-                    //flashLight.intensity -= Time.deltaTime * currentIntensity * timeSpeed;
                 }
 
+                // When the intensity is less or equal to 1.5, we change state to Battery1.
                 if (flashLight.intensity <= 1.5f)
                 {
-                    //flashLight.intensity -= Time.deltaTime * currentIntensity * timeSpeed;
-
-
                     intensityState = State.Battery1;
                 }
-                //currentBatteries = currentBatteries - 1;
-                break;
+
+            break;
         }
 
 
 
         switch (intensityState)
         {
+            // State accessed when currentBatteries is 3.
             case State.Battery3:
 
+                Debug.Log("Battery = 3");
+
+                /* When the intensity of the flashlight is less or equal to 2.9
+                   and more than 2, we change the space available to false. */
                 if (flashLight.intensity <= 2.9 && flashLight.intensity > 2f)
                 {
                     spaceAvailable = false;
-                    //flashLight.intensity -= Time.deltaTime * currentIntensity * timeSpeed;
                 }
 
+                // When the intensity is less or equal to 2, we change state to Battery2.
                 if (flashLight.intensity <= 2f)
                 {
-                    //flashLight.intensity -= Time.deltaTime * currentIntensity * timeSpeed;
-
-
                     intensityState = State.Battery2;
                 }
 
-                break;
+            break;
         }
 
+        /* If the intensity is more than 2.9, we keep the space available to false 
+           and we access the Battery3 state. */
         if (flashLight.intensity > 2.9f)
         {
             spaceAvailable = false;
-            //flashLight.intensity -= Time.deltaTime * currentIntensity * timeSpeed;
-            Debug.Log("Battery = 3");
             intensityState = State.Battery3;
         }
 
-
+        // The following "if's" statements are made to add and dispose batteries depending on the state.
         if (intensityState == State.Battery0)
         {
             currentBatteries = 0;
@@ -259,10 +268,4 @@ public class FlashLight : MonoBehaviour
             return;
         }
     }
-    /* I've tried creating a new boolean called emptyBaterry
-       to check if the player has an empty battery and then dispose it.
-       I've also plugged the if statements inside the big IF with Time.deltaTime. 
-       Just to see if it was possible to fix the issue, which didn't work.
-       Now the batteries don't go down, the intensity goes up
-       and the intensity on the script goes down, but keeps going below 0. */
 }

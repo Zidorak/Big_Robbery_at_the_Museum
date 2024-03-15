@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Doors : MonoBehaviour
@@ -24,6 +23,7 @@ public class Doors : MonoBehaviour
     public bool locked;
     public bool unlocked;
 
+    public KeyScript script;  
 
 
 
@@ -59,8 +59,10 @@ public class Doors : MonoBehaviour
         inReach = false;
         doorisClosed = true;
         doorisOpen = false;
+        keyOB.SetActive(false);
         //closeText.SetActive(false);
         //openText.SetActive(false);
+        GetComponent<KeyScript>();
     }
 
 
@@ -84,8 +86,13 @@ public class Doors : MonoBehaviour
         {
             //unlockedSound.Play();
             locked = false;
-            keyOB.SetActive(false);
+            keyOB.SetActive(true);
             StartCoroutine(unlockDoor());
+        }
+
+        if (script.currentKeyCount == 0)
+        {
+            keyOB.SetActive(false);
         }
 
         if (inReach && doorisClosed && unlocked && Input.GetButtonDown("Interact"))
@@ -106,6 +113,8 @@ public class Doors : MonoBehaviour
             //closeSound.Play();
             doorisClosed = true;
             doorisOpen = false;
+            lockOB.SetActive(true);
+            StartCoroutine(lockDoor());
         }
 
         if (inReach && locked && Input.GetButtonDown("Interact"))
@@ -121,13 +130,25 @@ public class Doors : MonoBehaviour
     {
         yield return new WaitForSeconds(.05f);
         {
-
             unlocked = true;
             lockOB.SetActive(false);
+            if (doorisOpen == true)
+            {
+                script.currentKeyCount = script.currentKeyCount - 1;
+            }
         }
     }
 
-
-
-
+    IEnumerator lockDoor()
+    {
+        yield return new WaitForSeconds(.05f);
+        {
+            unlocked = false;
+            lockOB.SetActive(true);
+            if (doorisOpen == false)
+            {
+                script.currentKeyCount = script.currentKeyCount + 1;
+            }
+        }
+    }
 }

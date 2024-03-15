@@ -35,7 +35,9 @@ public class CharacterMovement : MonoBehaviour
         float xValue = Input.GetAxis("Vertical") * Time.deltaTime;
 
         // With the values of the Z and X Axis, we transform.Translate which will move the player forward/backwards and left/right.
-        transform.Translate(zValue * playerSpeed, 0f, xValue * playerSpeed);
+        //transform.Translate(zValue * playerSpeed, 0f, xValue * playerSpeed);
+        //character.Move(new Vector3 (zValue * playerSpeed, 0f, xValue * playerSpeed));
+        character.Move(character.transform.right * zValue * playerSpeed + character.transform.forward * xValue * playerSpeed);
     }
 
 
