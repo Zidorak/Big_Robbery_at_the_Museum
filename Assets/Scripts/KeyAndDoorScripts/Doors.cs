@@ -148,6 +148,7 @@ public class Doors : MonoBehaviour
             if (doorisOpen == false)
             {
                 script.currentKeyCount = script.currentKeyCount + 1;
+                keyOB.SetActive(true);
             }
         }
     }
