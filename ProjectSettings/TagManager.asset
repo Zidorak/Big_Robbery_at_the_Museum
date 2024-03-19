@@ -9,6 +9,11 @@ TagManager:
   - Door
   - Key
   - Reach
+  - GoalDoor
+  - RedKey
+  - BlueKey
+  - GreenKey
+  - YellowKey
   layers:
   - Default
   - TransparentFX

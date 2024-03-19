@@ -1,12 +1,23 @@
 using System.Collections;
 using UnityEngine;
 
-public class Doors : MonoBehaviour
+public class GoalDoor : MonoBehaviour
 {
-
     public Animator doorAnimator;
-    public GameObject lockOB;
-    public GameObject keyOB;
+
+
+    public GameObject RedLockOB;
+    public GameObject BlueLockOB;
+    public GameObject YellowLockOB;
+    public GameObject GreenLockOB;
+
+
+    public GameObject RedKeyOB;
+    public GameObject BlueKeyOB;
+    public GameObject YellowKeyOB;
+    public GameObject GreenKeyOB;
+
+
     public GameObject openText;
     public GameObject closeText;
     public GameObject lockedText;
@@ -17,15 +28,15 @@ public class Doors : MonoBehaviour
     public AudioSource lockedSound;
     public AudioSource unlockedSound;
 
+
     public bool inReach;
     public bool doorisOpen;
     public bool doorisClosed;
     public bool locked;
     public bool unlocked;
 
-    public KeyScript keyScript;  
 
-
+    public GoalKeys goalKeys;
 
 
     public void OnTriggerEnter(Collider other)
@@ -59,40 +70,56 @@ public class Doors : MonoBehaviour
         inReach = false;
         doorisClosed = true;
         doorisOpen = false;
-        keyOB.SetActive(false);
+        RedKeyOB.SetActive(false);
+        BlueKeyOB.SetActive(false);
+        YellowKeyOB.SetActive(false);
+        GreenKeyOB.SetActive(false);
         //closeText.SetActive(false);
         //openText.SetActive(false);
-        GetComponent<KeyScript>();
+        GetComponent<GoalKeys>();
     }
-
-
-
 
     void Update()
     {
-        if (lockOB.activeInHierarchy)
+        if (inReach && RedKeyOB.activeInHierarchy && Input.GetButtonDown("Interact"))
         {
+            //unlockedSound.Play();
             locked = true;
-            unlocked = false;
+            RedKeyOB.SetActive(false);
+            RedLockOB.SetActive(false);
         }
 
-        else
+        if (inReach && BlueKeyOB.activeInHierarchy && Input.GetButtonDown("Interact"))
         {
-            unlocked = true;
-            locked = false;
+            //unlockedSound.Play();
+            locked = true;
+            BlueKeyOB.SetActive(false);
+            BlueLockOB.SetActive(false);
         }
 
-        if (inReach && keyOB.activeInHierarchy && Input.GetButtonDown("Interact"))
+        if (inReach && YellowKeyOB.activeInHierarchy && Input.GetButtonDown("Interact"))
+        {
+            //unlockedSound.Play();
+            locked = true;
+            YellowKeyOB.SetActive(false);
+            YellowLockOB.SetActive(false);
+        }
+
+        if (inReach && GreenKeyOB.activeInHierarchy && Input.GetButtonDown("Interact"))
+        {
+            //unlockedSound.Play();
+            locked = true;
+            GreenKeyOB.SetActive(false);
+            GreenLockOB.SetActive(false);
+        }
+
+        if (inReach && RedLockOB.activeInHierarchy == false && BlueLockOB.activeInHierarchy == false &&
+            YellowLockOB.activeInHierarchy == false && GreenLockOB.activeInHierarchy == false &&
+            doorisClosed && locked && Input.GetButtonDown("Interact"))
         {
             //unlockedSound.Play();
             locked = false;
-            keyOB.SetActive(true);
             StartCoroutine(unlockDoor());
-        }
-
-        if (keyScript.currentKeyCount == 0)
-        {
-            keyOB.SetActive(false);
         }
 
         if (inReach && doorisClosed && unlocked && Input.GetButtonDown("Interact"))
@@ -103,6 +130,10 @@ public class Doors : MonoBehaviour
             //openSound.Play();
             doorisOpen = true;
             doorisClosed = false;
+            RedLockOB.SetActive(false);
+            BlueLockOB.SetActive(false);
+            YellowLockOB.SetActive(false);
+            GreenLockOB.SetActive(false);
         }
 
         else if (inReach && doorisOpen && unlocked && Input.GetButtonDown("Interact"))
@@ -113,8 +144,10 @@ public class Doors : MonoBehaviour
             //closeSound.Play();
             doorisClosed = true;
             doorisOpen = false;
-            lockOB.SetActive(true);
-            StartCoroutine(lockDoor());
+            RedLockOB.SetActive(true);
+            BlueLockOB.SetActive(true);
+            YellowLockOB.SetActive(true);
+            GreenLockOB.SetActive(true);
         }
 
         if (inReach && locked && Input.GetButtonDown("Interact"))
@@ -131,25 +164,10 @@ public class Doors : MonoBehaviour
         yield return new WaitForSeconds(.05f);
         {
             unlocked = true;
-            lockOB.SetActive(false);
-            if (doorisOpen == true)
-            {
-                keyScript.currentKeyCount = keyScript.currentKeyCount - 1;
-            }
-        }
-    }
-
-    IEnumerator lockDoor()
-    {
-        yield return new WaitForSeconds(.05f);
-        {
-            unlocked = false;
-            lockOB.SetActive(true);
-            if (doorisOpen == false)
-            {
-                keyScript.currentKeyCount = keyScript.currentKeyCount + 1;
-                keyOB.SetActive(true);
-            }
+            RedLockOB.SetActive(false);
+            BlueLockOB.SetActive(false);
+            YellowLockOB.SetActive(false);
+            GreenLockOB.SetActive(false);
         }
     }
 }

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &117095742518365775
+--- !u!1001 &18537556799786423
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -22,15 +22,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1a2d0e880876ac4418776486fedc132d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -44.632
+      value: 7.699
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1a2d0e880876ac4418776486fedc132d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.6651
+      value: 10.226
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1a2d0e880876ac4418776486fedc132d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -47.7966
+      value: 23.79
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1a2d0e880876ac4418776486fedc132d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -66,36 +66,36 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 435a4741690f7b845a35a214d1c44878, type: 2}
     - target: {fileID: 919132149155446097, guid: 1a2d0e880876ac4418776486fedc132d, type: 3}
       propertyPath: m_Name
-      value: KeyPrefab
+      value: GreenGoalKeyPrefab
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1a2d0e880876ac4418776486fedc132d, type: 3}
       propertyPath: m_TagString
-      value: Key
+      value: GreenKey
       objectReference: {fileID: 0}
     - target: {fileID: 2858861989129603195, guid: 1a2d0e880876ac4418776486fedc132d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: c45e433cd540a7c4794b761d73a03056, type: 2}
+      objectReference: {fileID: 2100000, guid: f0af3ac9e33290e4baf512acfd815365, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1a2d0e880876ac4418776486fedc132d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -5637479596519700039}
+      addedObject: {fileID: -7779690168304893860}
   m_SourcePrefab: {fileID: 100100000, guid: 1a2d0e880876ac4418776486fedc132d, type: 3}
---- !u!1 &964166303315768094 stripped
+--- !u!1 &900915770278752486 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1a2d0e880876ac4418776486fedc132d, type: 3}
-  m_PrefabInstance: {fileID: 117095742518365775}
+  m_PrefabInstance: {fileID: 18537556799786423}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &-5637479596519700039
+--- !u!65 &-7779690168304893860
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 964166303315768094}
+  m_GameObject: {fileID: 900915770278752486}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2

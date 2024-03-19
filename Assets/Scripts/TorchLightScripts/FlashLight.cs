@@ -3,28 +3,28 @@ using UnityEngine;
 public class FlashLight : MonoBehaviour
 {
     // We get the flash light, which is a spot light.
-    [SerializeField] Light flashLight;
+    public Light flashLight;
 
     // Variable created to set the maximum amount of batteries we can have.
-    [SerializeField] private int maxBatteryCount = 3;
+    public int maxBatteryCount = 3;
 
     // Variable created to see how many batteries we currently have.
-    [SerializeField] private int currentBatteries = 0;
+    public int currentBatteries = 0;
 
     // Variable created to manage the life time of the batteries.
     public float timeSpeed;
 
     // Condition created to see if the light is on or off.
-    private bool lightOn;
+    public bool lightOn;
 
     // Condition created to see if the player has space for more batteries or not.
-    private bool spaceAvailable;
+    public bool spaceAvailable;
 
     // State machine to handle the intensity of the flash light with 4 different states.
-    private State intensityState;
+    public State intensityState;
 
     // States
-    private enum State
+    public enum State
     {
         Battery0,
         Battery1,
@@ -80,7 +80,7 @@ public class FlashLight : MonoBehaviour
     /* OnTriggerEnter uses a collider to compare the tag, which in this case is "Battery",
        then, if it matches the tag during collision, the object (battery) gets destroyed and 
        finally calls the AddBattery function. */
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Battery") && spaceAvailable == true)
         {
@@ -90,7 +90,7 @@ public class FlashLight : MonoBehaviour
         }
     }
 
-    void On()
+    public void On()
     {
         // The light is enabled.
         if (flashLight.intensity > 0)
@@ -99,7 +99,7 @@ public class FlashLight : MonoBehaviour
         }
     }
 
-    void Off()
+    public void Off()
     {
         // The light is disabled. 
         flashLight.enabled = false;
@@ -117,7 +117,7 @@ public class FlashLight : MonoBehaviour
         }
     }
 
-    void AddBattery()
+    public void AddBattery()
     {
         /* If the currentBatteries is less than the 3 and the space is available,  
            keep the available space and increase the currentBatteries by 1. */
@@ -137,7 +137,7 @@ public class FlashLight : MonoBehaviour
     }
 
     // This function will handle the intensity of the flashlight, which will get lower after some time.
-    void FlashLightIntensity()
+    public void FlashLightIntensity()
     {
         /* We have to make the light decays with time, dropping its intensity when on, so we
            decrease flashlight intensity with Time.deltaTime multiplied by timeSpeed.*/

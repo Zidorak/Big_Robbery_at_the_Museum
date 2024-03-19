@@ -7,8 +7,6 @@ public class KeyScript : MonoBehaviour
 
     public int maxKeyCount = 4;
 
-    public float doorRotationVelocity;
-
     public GameObject keyOB;
 
     private bool spaceAvailable;
