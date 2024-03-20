@@ -4,5 +4,17 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/BRATM/MainMenu.unity
+    guid: bd2a16473a4c89d41b196e93fa94bca2
+  - enabled: 1
+    path: Assets/Scenes/BRATM/BRATM.unity
+    guid: 8f6170f5bf742064cafb215b5a1ee424
+  - enabled: 1
+    path: Assets/Scenes/BRATM/YouWin.unity
+    guid: a0899a34f175cac46b6d7ff7091ceb8d
+  - enabled: 1
+    path: Assets/Scenes/BRATM/YouLose.unity
+    guid: f441878a25e176447869e866efe8e3af
   m_configObjects: {}

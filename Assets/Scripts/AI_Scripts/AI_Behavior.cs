@@ -11,104 +11,117 @@ public class AI_Behavior : MonoBehaviour
 
     // We create a variable so we can get the NavMeshAgent.
     public NavMeshAgent agent;
-    public Transform moveToGoal;
 
     // We create a currentState so we can access the first state at the start of the game, which will be "Explore".
     private State currentState;
 
+    public Transform[] waypoints;
+
+    public int currentWaypoint = 0;
+
     public FlashLight flashLightScript;
 
-    public KeyScript keyScript;
+    public float range;
+
+    public Transform centrePoint;
 
 
     // We create a private Enum to determine what states are there for the AI to access.
     private enum State
     {
-        LookForStatue,
-        LookForBatteries, // The AI will look for batteries if the intensity is less than 0.5f.
-        PickUpItem, // If the AI spots a door, it will walk to it and open it.
-        OpenDoors, // If the AI spots an item, it will pick it up.
+        RandomPatrol, // The AI will patrol 
+        StealBatteries, // The AI will look for batteries if the intensity is less than 0.5f.
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        // We define the State "Explore" so the AI starts walking looking for doors to open or pick up items 
-        currentState = State.LookForStatue;
-
         // We get a reference to the NavMeshAgent.
         agent = GetComponent<NavMeshAgent>();
         
+        // Reference to the Player's FlashLight.
         GetComponent<FlashLight>();
-        GetComponent<KeyScript>();
+
+        // We define the State to be "RandomPatrol" so the AI starts walking around the level. 
+       // currentWaypoint = 0;
+        currentState = State.RandomPatrol;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //agent.destination = moveToGoal.position;
-
         SwitchState();
+
+        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        {
+            currentState = State.StealBatteries;
+        }
     }
 
     public void SwitchState()
     {
-        switch (currentState) // Since the currentState is "LookForKeys", we start the switch statement with it.
+        switch (currentState) // Since the currentState is "RandomPatrol", we start the switch statement with it.
         {
-            case State.LookForStatue:
+            case State.RandomPatrol:
 
-                if (flashLightScript.flashLight.intensity > 0.5f)
+                if (flashLightScript.currentBatteries > 0)
                 {
-                    // Look for keys to so the AI can access other rooms.
+                    if (agent.remainingDistance <= agent.stoppingDistance) //done with path
+                    {
+                        Vector3 point;
+                        if (RandomPoint(centrePoint.position, range, out point)) //pass in our centre point and radius of area
+                        {
+                            Debug.DrawRay(point, Vector3.up, Color.blue, 1.0f); //so you can see with gizmos
+                            agent.SetDestination(point);
+                        }
+                    }
                 }
 
-                if (flashLightScript.flashLight.intensity < 0.5f)
+                if (flashLightScript.currentBatteries == 0)
                 {
-                    currentState = State.LookForBatteries;
+                    currentState = State.StealBatteries;
                 }
 
-                break;
-
-            case State.LookForBatteries: // At the start of the game, the AI will look for keys to open doors.
-
-                if (flashLightScript.flashLight.intensity < 0.5f)
-                {
-                    // Look for batteries.
-                }
-
-                if (flashLightScript.flashLight.intensity > 0.5f)
-                {
-                    currentState = State.PickUpItem; // Now the AI will look for items.
-                }
-
-                break;
-
-            case State.PickUpItem: // When a battery is spotted, the AI will walk to it and pick it up.
-
-                // If the AI has spotted any items nearby, it will walk to it and pick it up.
-
-                if (flashLightScript.flashLight.intensity < 0.5f)
-                {
-                    // Look for batteries.
-                    currentState = State.LookForBatteries;
-                }
-
-                break;
-
-            case State.OpenDoors: // If the AI has a key, it will open a door that is in front of it.
-
-                if (keyScript.keyOB.activeInHierarchy)
-                {
-                    // Open a locked door. HOW????
-                }
-
-                if (flashLightScript.flashLight.intensity < 0.5f)
-                {
-                    currentState = State.LookForBatteries;
-                }
-
-                break;
+            break;
         }
+
+        switch (currentState)
+        {
+            case State.StealBatteries:
+
+                if (waypoints.Length == 0)
+                {
+                    return;
+                }
+
+                currentWaypoint = (currentWaypoint + 1) % waypoints.Length;
+                agent.SetDestination(waypoints[currentWaypoint].transform.position);
+
+
+                if (flashLightScript.currentBatteries > 0)
+                {
+                    currentState = State.RandomPatrol;
+                }
+
+            break;
+        }
+    }
+
+    bool RandomPoint(Vector3 center, float range, out Vector3 result)
+    {
+
+        Vector3 randomPoint = center + Random.insideUnitSphere * range; //random point in a sphere 
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
+        {
+            //the 1.0f is the max distance from the random point to a point on the navmesh, might want to increase if range is big
+            //or add a for loop like in the documentation
+            result = hit.position;
+            return true;
+        }
+
+        result = Vector3.zero;
+        return false;
     }
 
     /* Make a behaviour tree including all of those states from this script. 
@@ -116,5 +129,5 @@ public class AI_Behavior : MonoBehaviour
        The AI will look for Batteries and keys, whatever it needs first, then it will look for doors,
        then it will look for the main goal, unless it has everything else, so then it will look for the goal
        straight away. */
-    
+
 }
