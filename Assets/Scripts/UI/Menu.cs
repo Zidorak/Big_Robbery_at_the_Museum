@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
+
     public void OnPlayButton()
     {
         SceneManager.LoadScene(1);
@@ -15,7 +16,8 @@ public class Menu : MonoBehaviour
         if (Application.isEditor)
         {
             UnityEditor.EditorApplication.isPlaying = false;
-        } else
+        } 
+        else
         {
             Application.Quit();
         }

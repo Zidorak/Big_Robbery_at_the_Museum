@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class CharacterMovement : MonoBehaviour
 {
@@ -44,22 +43,23 @@ public class CharacterMovement : MonoBehaviour
         {
             velocity.y = -2f;
         }
-        // Based on the Z Axis we get the vertical movement and multiply it by Time.deltaTime.
+        // Based on the Z Axis we get the vertical movement.
         float zValue = Input.GetAxis("Horizontal");
 
-        // Based on the X Axis we get the horizontal movement and multiply it by Time.deltaTime.
+        // Based on the X Axis we get the horizontal movement.
         float xValue = Input.GetAxis("Vertical");
 
+        /* We make a new Vector3 move which will be equal to the 
+           transform right and forward and multiply them with the correspondent Axis. */
         Vector3 move = transform.right * zValue + transform.forward * xValue;
 
+        // We multiply "move" with the speed and Time.deltaTime.
         character.Move(move * playerSpeed * Time.deltaTime);
 
+        // We apply gravity by constantly adding the value of velocity.y and multiply by Time.deltaTime.
         velocity.y += gravity * Time.deltaTime;
 
-        // With the values of the Z and X Axis, we transform.Translate which will move the player forward/backwards and left/right.
-        //transform.Translate(zValue * playerSpeed, 0f, xValue * playerSpeed);
-        //character.Move(new Vector3 (zValue * playerSpeed, 0f, xValue * playerSpeed));
-        //character.Move(character.transform.right * zValue * playerSpeed + character.transform.forward * xValue * playerSpeed * Time.deltaTime);
+        // We multiply the velocity by Time.deltaTime.
         character.Move(velocity * Time.deltaTime);
     }
 

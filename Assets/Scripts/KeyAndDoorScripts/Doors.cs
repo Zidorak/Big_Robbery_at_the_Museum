@@ -65,9 +65,6 @@ public class Doors : MonoBehaviour
         GetComponent<KeyScript>();
     }
 
-
-
-
     void Update()
     {
         if (lockOB.activeInHierarchy)
