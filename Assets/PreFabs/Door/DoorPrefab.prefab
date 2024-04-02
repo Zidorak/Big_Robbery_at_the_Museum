@@ -210,6 +210,7 @@ MonoBehaviour:
   locked: 1
   unlocked: 0
   keyScript: {fileID: 0}
+  DoorSO: {fileID: 11400000, guid: b4af3cb3ece7888448a2d3188c7f589b, type: 2}
 --- !u!1 &3468069473526043504
 GameObject:
   m_ObjectHideFlags: 0

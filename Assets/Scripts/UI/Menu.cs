@@ -7,7 +7,9 @@ public class Menu : MonoBehaviour
 {
 
     public void OnPlayButton()
-    {
+    {   
+        PauseMenu.gameIsPaused = false;
+        Time.timeScale = 1f;
         SceneManager.LoadScene(1);
     }
 
@@ -21,6 +23,5 @@ public class Menu : MonoBehaviour
         {
             Application.Quit();
         }
-
     }
 }

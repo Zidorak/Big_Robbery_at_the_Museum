@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CameraView : MonoBehaviour
 {
-
     public float mouseSensitivity = 500f;
 
     public Transform player;
@@ -19,6 +18,11 @@ public class CameraView : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+    {
+        OnSensitivityChange();
+    }
+
+    public void OnSensitivityChange()
     {
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
