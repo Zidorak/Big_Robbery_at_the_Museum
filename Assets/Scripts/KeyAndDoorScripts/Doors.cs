@@ -33,13 +33,13 @@ public class Doors : MonoBehaviour
         if (other.gameObject.tag == "Reach" && doorisClosed)
         {
             inReach = true;
-            //openText.SetActive(true);
+            openText.SetActive(true);
         }
 
         if (other.gameObject.tag == "Reach" && doorisOpen)
         {
             inReach = true;
-            //closeText.SetActive(true);
+            closeText.SetActive(true);
         }
     }
 
@@ -48,9 +48,9 @@ public class Doors : MonoBehaviour
         if (other.gameObject.tag == "Reach")
         {
             inReach = false;
-            //openText.SetActive(false);
-            //lockedText.SetActive(false);
-            //closeText.SetActive(false);
+            openText.SetActive(false);
+            lockedText.SetActive(false);
+            closeText.SetActive(false);
         }
     }
 
@@ -60,8 +60,9 @@ public class Doors : MonoBehaviour
         doorisClosed = true;
         doorisOpen = false;
         keyOB.SetActive(false);
-        //closeText.SetActive(false);
-        //openText.SetActive(false);
+        closeText.SetActive(false);
+        openText.SetActive(false);
+        lockedText.SetActive(false);
         GetComponent<KeyScript>();
     }
 
@@ -96,7 +97,7 @@ public class Doors : MonoBehaviour
         {
             doorAnimator.SetBool("Open", true);
             doorAnimator.SetBool("Close", false);
-            //openText.SetActive(false);
+            openText.SetActive(true);
             //openSound.Play();
             doorisOpen = true;
             doorisClosed = false;
@@ -106,7 +107,7 @@ public class Doors : MonoBehaviour
         {
             doorAnimator.SetBool("Open", false);
             doorAnimator.SetBool("Close", true);
-            //closeText.SetActive(false);
+            closeText.SetActive(false);
             //closeSound.Play();
             doorisClosed = true;
             doorisOpen = false;
@@ -116,8 +117,8 @@ public class Doors : MonoBehaviour
 
         if (inReach && locked && Input.GetButtonDown("Interact"))
         {
-            //openText.SetActive(false);
-            //lockedText.SetActive(true);
+            openText.SetActive(false);
+            lockedText.SetActive(true);
             //lockedSound.Play();
         }
 

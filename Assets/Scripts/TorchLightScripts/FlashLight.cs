@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class FlashLight : MonoBehaviour
 {
+    public GameObject batterySprite1;
+    public GameObject batterySprite2;
+    public GameObject batterySprite3;
+
     // We get the flash light, which is a spot light.
     public Light flashLight;
 
@@ -43,6 +47,10 @@ public class FlashLight : MonoBehaviour
 
         // We set the state to be Battery0.
         intensityState = State.Battery0;
+
+        batterySprite1.SetActive(false);
+        batterySprite2.SetActive(false);
+        batterySprite3.SetActive(false);
     }
 
     // Update is called once per frame
@@ -74,6 +82,33 @@ public class FlashLight : MonoBehaviour
             Debug.Log("Battery = 3");
             flashLight.intensity = 3f;
             intensityState = State.Battery3;
+        }
+
+        // Setting the sprites to active depending on the amount.
+
+        if (currentBatteries == 0)
+        {
+            batterySprite1.SetActive(false);
+            batterySprite2.SetActive(false);
+            batterySprite3.SetActive(false);
+        }
+        else if (currentBatteries == 1)
+        {
+            batterySprite1.SetActive(true);
+            batterySprite2.SetActive(false);
+            batterySprite3.SetActive(false);
+        }
+        else if (currentBatteries == 2)
+        {
+            batterySprite1.SetActive(true);
+            batterySprite2.SetActive(true);
+            batterySprite3.SetActive(false);
+        }
+        else if (currentBatteries == 3)
+        {
+            batterySprite1.SetActive(true);
+            batterySprite2.SetActive(true);
+            batterySprite3.SetActive(true);
         }
     }
 
