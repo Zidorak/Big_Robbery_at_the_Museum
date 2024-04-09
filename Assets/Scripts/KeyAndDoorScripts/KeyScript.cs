@@ -16,6 +16,8 @@ public class KeyScript : MonoBehaviour
 
     public GameObject key;
 
+    public AudioSource keyPickup;
+
 
     // Start is called before the first frame update
     void Start()
@@ -47,7 +49,7 @@ public class KeyScript : MonoBehaviour
         {
             GameObject.Destroy(other.transform.gameObject);
             AddKey();
-
+            keyPickup.Play();
             for (int i = 0; i < inventory.slots.Length; i++) 
             {
                 if (inventory.isfull[i] == false)

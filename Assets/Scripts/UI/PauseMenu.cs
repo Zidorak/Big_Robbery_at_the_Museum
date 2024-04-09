@@ -10,8 +10,6 @@ public class PauseMenu : MonoBehaviour
 
     public GameObject pauseMenuUI;
 
-    public GameObject mapMenuUI;
-
     public GameObject optionsMenuUI;
     
     
@@ -34,11 +32,7 @@ public class PauseMenu : MonoBehaviour
                 Pause();
             }
         }
-        if (Input.GetKeyUp(KeyCode.Q) && mapMenuUI.activeInHierarchy == true)
-        {
-            mapMenuUI.SetActive(false);
-            Resume();
-        }
+
         if (Input.GetKeyUp(KeyCode.Q) && optionsMenuUI.activeInHierarchy == true)
         {
             optionsMenuUI.SetActive(false);
@@ -65,11 +59,6 @@ public class PauseMenu : MonoBehaviour
     public void OnMainMenuButton()
     {
         SceneManager.LoadScene(0);
-    }
-
-    public void OnMapButton()
-    {
-        mapMenuUI.SetActive(true);
     }
 
     public void OnOptionsMenu()

@@ -82,7 +82,7 @@ public class Doors : MonoBehaviour
 
         if (inReach && keyOB.activeInHierarchy && Input.GetButtonDown("Interact"))
         {
-            //unlockedSound.Play();
+            unlockedSound.Play();
             locked = false;
             keyOB.SetActive(true);
             StartCoroutine(unlockDoor());
@@ -98,7 +98,7 @@ public class Doors : MonoBehaviour
             doorAnimator.SetBool("Open", true);
             doorAnimator.SetBool("Close", false);
             openText.SetActive(true);
-            //openSound.Play();
+            openSound.Play();
             doorisOpen = true;
             doorisClosed = false;
         }
@@ -108,7 +108,7 @@ public class Doors : MonoBehaviour
             doorAnimator.SetBool("Open", false);
             doorAnimator.SetBool("Close", true);
             closeText.SetActive(false);
-            //closeSound.Play();
+            closeSound.Play();
             doorisClosed = true;
             doorisOpen = false;
             lockOB.SetActive(true);
@@ -119,7 +119,7 @@ public class Doors : MonoBehaviour
         {
             openText.SetActive(false);
             lockedText.SetActive(true);
-            //lockedSound.Play();
+            lockedSound.Play();
         }
 
     }

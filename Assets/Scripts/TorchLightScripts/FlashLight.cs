@@ -27,6 +27,10 @@ public class FlashLight : MonoBehaviour
     // State machine to handle the intensity of the flash light with 4 different states.
     public State intensityState;
 
+    // Play Audio when turning the flashlight on and off.
+    public AudioSource on;
+    public AudioSource off;
+
     // States
     public enum State
     {
@@ -61,6 +65,7 @@ public class FlashLight : MonoBehaviour
         {
             On();
             lightOn = true; // The boolean created turns to true after the light turns on.
+            on.Play();
         }
 
         if (lightOn == true)
@@ -74,6 +79,7 @@ public class FlashLight : MonoBehaviour
         {
             Off();
             lightOn = false; // The boolean created turns to false after the light turns off.
+            off.Play();
         }
 
         if (flashLight.intensity > 3f)
@@ -149,6 +155,7 @@ public class FlashLight : MonoBehaviour
             Debug.Log("No battery");
             flashLight.enabled = false;
             lightOn = false;
+            off.Play();
         }
     }
 

@@ -83,7 +83,7 @@ public class GoalDoor : MonoBehaviour
     {
         if (inReach && RedKeyOB.activeInHierarchy && Input.GetButtonDown("Interact"))
         {
-            //unlockedSound.Play();
+            unlockedSound.Play();
             locked = true;
             RedKeyOB.SetActive(false);
             RedLockOB.SetActive(false);
@@ -91,7 +91,7 @@ public class GoalDoor : MonoBehaviour
 
         if (inReach && BlueKeyOB.activeInHierarchy && Input.GetButtonDown("Interact"))
         {
-            //unlockedSound.Play();
+            unlockedSound.Play();
             locked = true;
             BlueKeyOB.SetActive(false);
             BlueLockOB.SetActive(false);
@@ -99,7 +99,7 @@ public class GoalDoor : MonoBehaviour
 
         if (inReach && YellowKeyOB.activeInHierarchy && Input.GetButtonDown("Interact"))
         {
-            //unlockedSound.Play();
+            unlockedSound.Play();
             locked = true;
             YellowKeyOB.SetActive(false);
             YellowLockOB.SetActive(false);
@@ -107,7 +107,7 @@ public class GoalDoor : MonoBehaviour
 
         if (inReach && GreenKeyOB.activeInHierarchy && Input.GetButtonDown("Interact"))
         {
-            //unlockedSound.Play();
+            unlockedSound.Play();
             locked = true;
             GreenKeyOB.SetActive(false);
             GreenLockOB.SetActive(false);
@@ -117,7 +117,7 @@ public class GoalDoor : MonoBehaviour
             YellowLockOB.activeInHierarchy == false && GreenLockOB.activeInHierarchy == false &&
             doorisClosed && locked && Input.GetButtonDown("Interact"))
         {
-            //unlockedSound.Play();
+            unlockedSound.Play();
             locked = false;
             StartCoroutine(unlockDoor());
         }
@@ -127,7 +127,7 @@ public class GoalDoor : MonoBehaviour
             doorAnimator.SetBool("Open", true);
             doorAnimator.SetBool("Close", false);
             openText.SetActive(false);
-            //openSound.Play();
+            openSound.Play();
             doorisOpen = true;
             doorisClosed = false;
             RedLockOB.SetActive(false);
@@ -141,7 +141,7 @@ public class GoalDoor : MonoBehaviour
             doorAnimator.SetBool("Open", false);
             doorAnimator.SetBool("Close", true);
             closeText.SetActive(false);
-            //closeSound.Play();
+            closeSound.Play();
             doorisClosed = true;
             doorisOpen = false;
             RedLockOB.SetActive(true);
@@ -154,7 +154,7 @@ public class GoalDoor : MonoBehaviour
         {
             openText.SetActive(false);
             lockedText.SetActive(true);
-            //lockedSound.Play();
+            lockedSound.Play();
         }
 
     }

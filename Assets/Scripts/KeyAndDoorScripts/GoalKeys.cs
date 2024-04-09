@@ -23,12 +23,15 @@ public class GoalKeys : MonoBehaviour
     public GameObject YellowKeyslot;
     public GameObject GreenKeyslot;
 
+    public AudioSource keyPickup;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("RedKey"))
         {
             GameObject.Destroy(other.transform.gameObject);
             AddRedKey();
+            keyPickup.Play();
             for (int i = 0; i < inventory.slots.Length; i++)
             {
                 if (inventory.isfull[i] == false)
@@ -43,6 +46,7 @@ public class GoalKeys : MonoBehaviour
         {
             GameObject.Destroy(other.transform.gameObject);
             AddBlueKey();
+            keyPickup.Play();
             for (int i = 0; i < inventory.slots.Length; i++)
             {
                 if (inventory.isfull[i] == false)
@@ -57,6 +61,7 @@ public class GoalKeys : MonoBehaviour
         {
             GameObject.Destroy(other.transform.gameObject);
             AddYellowKey();
+            keyPickup.Play();
             for (int i = 0; i < inventory.slots.Length; i++)
             {
                 if (inventory.isfull[i] == false)
@@ -71,6 +76,7 @@ public class GoalKeys : MonoBehaviour
         {
             GameObject.Destroy(other.transform.gameObject);
             AddGreenKey();
+            keyPickup.Play();
             for (int i = 0; i < inventory.slots.Length; i++)
             {
                 if (inventory.isfull[i] == false)
