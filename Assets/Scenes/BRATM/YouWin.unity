@@ -935,11 +935,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "- Statues AI: \r\n\r\nDesigned by Giancarlo T. Sculpted by Julio Yabar.\r\n\r\n-
-    Sounds: \r\n\r\nSound FX (User1 Productions, Youtube Channel)\r\nMain Menu Music,
-    background music (Soundtrap.com)\r\n\r\n- UI elements: \r\n\r\nMain Menu image
-    (Microsoft Designer AI tool) \r\nFont (dafont.com)\r\nButtons (Unity Asset Store
-    - uifabrica)\r\n\r\n\n"
+  m_text: "- Statues AI: \r\n\r\nFemale Statue (sketchfab. com -Lukas Bobor)\nMale
+    Statue (sketchfab.com - Owlish Media)\r\n\r\n- Sounds: \r\n\r\nSound FX (User1
+    Productions, Youtube Channel)\r\nMain Menu Music, background music (Soundtrap.com)\r\n\r\n-
+    UI elements: \r\n\r\nMain Menu image (Microsoft Designer AI tool) \r\nFont (dafont.com)\r\nButtons
+    (Unity Asset Store - uifabrica)\r\n\r\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

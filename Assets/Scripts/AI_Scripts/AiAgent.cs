@@ -6,8 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class AiAgent : MonoBehaviour
 {
-    public AiStateId initialState; 
-    //public AiAgentConfig config;
+    public AiStateId initialState;
     public AiStateMachine stateMachine;
     public NavMeshAgent navMeshAgent;
     public Transform playerTransform;
