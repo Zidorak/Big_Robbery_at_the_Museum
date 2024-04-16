@@ -827,7 +827,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2, y: 336}
+  m_AnchoredPosition: {x: -21, y: 336}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &356484867
@@ -850,7 +850,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Be glad that this is a simulation. You can do better, try again
+  m_text: You can do better, try again
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 64a93ca621de0a047a25a714fb34328e, type: 2}
   m_sharedMaterial: {fileID: 7370038142757929382, guid: 64a93ca621de0a047a25a714fb34328e, type: 2}
@@ -877,15 +877,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 100
-  m_fontSizeBase: 100
+  m_fontSize: 140
+  m_fontSizeBase: 140
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -2735,8 +2735,8 @@ MonoBehaviour:
   m_text: "- Statues AI: \r\n\r\nFemale Statue (sketchfab. com -Lukas Bobor)\nMale
     Statue (sketchfab.com - Owlish Media)\r\n\r\n- Sounds: \r\n\r\nSound FX (User1
     Productions, Youtube Channel)\r\nMain Menu Music, background music (Soundtrap.com)\r\n\r\n-
-    UI elements: \r\n\r\nMain Menu image (Microsoft Designer AI tool) \r\nFont (dafont.com)\r\nButtons
-    (Unity Asset Store - uifabrica)\r\n\r\n\n"
+    UI elements: \r\n\r\nMain Menu Image / Framed Pictures (Microsoft Designer AI
+    tool) \r\nFont (dafont.com)\r\nButtons (Unity Asset Store - uifabrica)\r\n\r\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
