@@ -216,7 +216,7 @@ public class FlashLight : MonoBehaviour
 
                 /* When the intensity of the flashlight is less or equal to 1.5
                    and more than 0.1, we keep the space available to true. */
-                if (flashLight.intensity <= 1.5f && flashLight.intensity > 0.1f)
+                if (flashLight.intensity <= 1.9f && flashLight.intensity > 0.1f)
                 {
                     spaceAvailable = true;
                 }
@@ -241,13 +241,13 @@ public class FlashLight : MonoBehaviour
 
                 /* When the intensity of the flashlight is less or equal to 2
                    and more than 1.5, we keep the space available to true. */
-                if (flashLight.intensity <= 2 && flashLight.intensity > 1.5f)
+                if (flashLight.intensity <= 2 && flashLight.intensity > 0.9f)
                 {
                     spaceAvailable = true;
                 }
 
                 // When the intensity is less or equal to 1.5, we change state to Battery1.
-                if (flashLight.intensity <= 1.5f)
+                if (flashLight.intensity <= 0.9f)
                 {
                     intensityState = State.Battery1;
                 }
