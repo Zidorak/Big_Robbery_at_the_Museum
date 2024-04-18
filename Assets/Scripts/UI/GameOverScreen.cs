@@ -17,14 +17,16 @@ public class GameOverScreen : MonoBehaviour
     }
     public void OnQuitButton()
     {
-        //if (Application.isEditor)
-        //{
-        //    UnityEditor.EditorApplication.isPlaying = false;
-        //}
-        //else
-        //{
-        //    Application.Quit();
-        //}
+#if UNITY_EDITOR
+        if (Application.isEditor)
+        {
+            UnityEditor.EditorApplication.isPlaying = false;
+        }
+        else
+        {
+            Application.Quit();
+        }
+#endif
         Application.Quit();
     }
 }

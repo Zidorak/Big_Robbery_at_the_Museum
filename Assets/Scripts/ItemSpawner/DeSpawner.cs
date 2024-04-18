@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DeSpawner : MonoBehaviour
 {
-    private float deSpawnTimer = 60f;
+    private float deSpawnTimer = 30f;
 
     private IEnumerator Start()
     {
@@ -14,6 +14,6 @@ public class DeSpawner : MonoBehaviour
             passedTime += Time.deltaTime;
             yield return null;
         }
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }

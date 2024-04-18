@@ -45,6 +45,7 @@ public class FlashLight : MonoBehaviour
     {
         // We set the torchlight to be off at the start of the game.
         flashLight.enabled = false;
+        lightOn = false;
         
         // We set the space available to true so the player can start picking batteries up. 
         spaceAvailable = true;
@@ -61,25 +62,22 @@ public class FlashLight : MonoBehaviour
     void Update()
     {
         // We call the OnOff function on Update().
-        if (Input.GetKeyDown(KeyCode.F))
+        if (lightOn == false && Input.GetKeyDown(KeyCode.F))
         {
             On();
             lightOn = true; // The boolean created turns to true after the light turns on.
             on.Play();
         }
-
-        if (lightOn == true)
-        {
-            FlashLightIntensity(); // If the boolean is true, then we run FlashLightIntensity().
-        }
-
-
-
-        if (Input.GetKeyDown(KeyCode.R))
+        else if (/*Input.GetKeyDown(KeyCode.R)*/ lightOn == true && Input.GetKeyDown(KeyCode.F))
         {
             Off();
             lightOn = false; // The boolean created turns to false after the light turns off.
             off.Play();
+        }
+
+        if (lightOn == true)
+        {
+            FlashLightIntensity(); // If the boolean is true, then we run FlashLightIntensity().
         }
 
         if (flashLight.intensity > 3f)
@@ -89,7 +87,6 @@ public class FlashLight : MonoBehaviour
             flashLight.intensity = 3f;
             intensityState = State.Battery3;
         }
-
         // Setting the sprites to active depending on the amount.
 
         if (currentBatteries == 0)
@@ -116,6 +113,8 @@ public class FlashLight : MonoBehaviour
             batterySprite2.SetActive(true);
             batterySprite3.SetActive(true);
         }
+
+
     }
 
     /* OnTriggerEnter uses a collider to compare the tag, which in this case is "Battery",
@@ -173,8 +172,33 @@ public class FlashLight : MonoBehaviour
         if (currentBatteries == maxBatteryCount)
         {
             spaceAvailable = false;
-            Debug.Log("Battery = 3 You have no more space");
-            return;
+            
+        }
+        // Setting the sprites to active depending on the amount.
+
+        if (currentBatteries == 0)
+        {
+            batterySprite1.SetActive(false);
+            batterySprite2.SetActive(false);
+            batterySprite3.SetActive(false);
+        }
+        else if (currentBatteries == 1)
+        {
+            batterySprite1.SetActive(true);
+            batterySprite2.SetActive(false);
+            batterySprite3.SetActive(false);
+        }
+        else if (currentBatteries == 2)
+        {
+            batterySprite1.SetActive(true);
+            batterySprite2.SetActive(true);
+            batterySprite3.SetActive(false);
+        }
+        else if (currentBatteries == 3)
+        {
+            batterySprite1.SetActive(true);
+            batterySprite2.SetActive(true);
+            batterySprite3.SetActive(true);
         }
     }
 
@@ -216,7 +240,7 @@ public class FlashLight : MonoBehaviour
 
                 /* When the intensity of the flashlight is less or equal to 1.5
                    and more than 0.1, we keep the space available to true. */
-                if (flashLight.intensity <= 1.9f && flashLight.intensity > 0.1f)
+                if (flashLight.intensity <= 1f && flashLight.intensity > 0.1f)
                 {
                     spaceAvailable = true;
                 }
@@ -241,13 +265,13 @@ public class FlashLight : MonoBehaviour
 
                 /* When the intensity of the flashlight is less or equal to 2
                    and more than 1.5, we keep the space available to true. */
-                if (flashLight.intensity <= 2 && flashLight.intensity > 0.9f)
+                if (flashLight.intensity <= 2 && flashLight.intensity > 1f)
                 {
                     spaceAvailable = true;
                 }
 
                 // When the intensity is less or equal to 1.5, we change state to Battery1.
-                if (flashLight.intensity <= 0.9f)
+                if (flashLight.intensity <= 1f)
                 {
                     intensityState = State.Battery1;
                 }
@@ -265,10 +289,10 @@ public class FlashLight : MonoBehaviour
                 Debug.Log("Battery = 3");
 
                 /* When the intensity of the flashlight is less or equal to 2.9
-                   and more than 2, we change the space available to false. */
-                if (flashLight.intensity <= 2.9 && flashLight.intensity > 2f)
+                   and more than 2, we change the space available to true. */
+                if (flashLight.intensity <= 3 && flashLight.intensity > 2f)
                 {
-                    spaceAvailable = false;
+                    spaceAvailable = true;
                 }
 
                 // When the intensity is less or equal to 2, we change state to Battery2.

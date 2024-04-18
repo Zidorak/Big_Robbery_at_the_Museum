@@ -11,16 +11,23 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenuUI;
 
     public GameObject optionsMenuUI;
-    
-    
-    private void Start()
+
+    public GameObject instructionsPanel;
+
+    public void Start()
     {
-        
+        Cursor.lockState = CursorLockMode.Confined;
+        instructionsPanel.SetActive(true);
+        Time.timeScale = 0f;
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
+        if (instructionsPanel.activeInHierarchy)
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+        }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (gameIsPaused)
@@ -66,17 +73,25 @@ public class PauseMenu : MonoBehaviour
         optionsMenuUI.SetActive(true);
     }
 
+    public void ReadyButton()
+    {
+        instructionsPanel.SetActive(false);
+        Time.timeScale = 1f;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
     public void OnQuitButton()
     {
-        //if (Application.isEditor)
-        //{
-        //    UnityEditor.EditorApplication.isPlaying = false;
-        //}
-        //else
-        //{
-        //    Application.Quit();
-        //}
-
+#if UNITY_EDITOR
+        if (Application.isEditor)
+        {
+            UnityEditor.EditorApplication.isPlaying = false;
+        }
+        else
+        {
+            Application.Quit();
+        }
+#endif
         Application.Quit();
     }
 }

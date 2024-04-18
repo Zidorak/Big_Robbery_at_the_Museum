@@ -16,8 +16,8 @@ public class ObjectPool : MonoBehaviour
     void Start()
     {
         objectPool = new GameObject[poolCount];
-
-        for (int i = 0; i < poolCount; i++)
+        
+        for (int i = 0; i <= poolCount; i++)
         {
             objectPool[i] = Instantiate(battery) as GameObject;
             objectPool[i].SetActive(false);

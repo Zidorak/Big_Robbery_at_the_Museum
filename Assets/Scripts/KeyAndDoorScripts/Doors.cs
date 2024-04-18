@@ -112,7 +112,7 @@ public class Doors : MonoBehaviour
             doorisClosed = true;
             doorisOpen = false;
             lockOB.SetActive(true);
-            StartCoroutine(lockDoor());
+            //StartCoroutine(lockDoor());
         }
 
         if (inReach && locked && Input.GetButtonDown("Interact"))
@@ -130,24 +130,24 @@ public class Doors : MonoBehaviour
         {
             unlocked = true;
             lockOB.SetActive(false);
-            if (doorisOpen == true)
-            {
-                keyScript.currentKeyCount = keyScript.currentKeyCount - 1;
-            }
+            //if (doorisOpen == true)
+            //{
+            //    keyScript.currentKeyCount = keyScript.currentKeyCount - 1;
+            //}
         }
     }
 
-    IEnumerator lockDoor()
-    {
-        yield return new WaitForSeconds(.05f);
-        {
-            unlocked = false;
-            lockOB.SetActive(true);
-            if (doorisOpen == false)
-            {
-                keyScript.currentKeyCount = keyScript.currentKeyCount + 1;
-                keyOB.SetActive(true);
-            }
-        }
-    }
+    //IEnumerator lockDoor()
+    //{
+    //    yield return new WaitForSeconds(.05f);
+    //    {
+    //        unlocked = false;
+    //        lockOB.SetActive(true);
+    //        if (doorisOpen == false)
+    //        {
+    //            keyScript.currentKeyCount = keyScript.currentKeyCount + 1;
+    //            keyOB.SetActive(true);
+    //        }
+    //    }
+    //}
 }
