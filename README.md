@@ -1,2 +1,5 @@
-# Big_Robbery_at_the_Museum
- Big Robbery at the Museum is a 1st person 3D level where you play as a burglar master who is trying to steal a valuable statue. After entering the museum, you find out that there is another burglar trying to steal the same statue. Who will get it first?
+Big Robbery at the Museum (BRATM) is a first person 3D level based on the 1500's, where you play as a burglar master called Emilia Santos, who has to steal a valuable chalice.   
+In order to make the game challenging and fun at the same time, there are two core mechanics that allow the player to get into the room with the chalice. 
+The first is a flash light, which runs out of battery over time. Picking up batteries will allow you to replenish the life of your torchlight and this will make exploring the game easier.
+The second core mechanic is picking up four coloured keys in order to unlock and open the Goal Door that contains the Chalice. Also, there is a key that appears in front of the player at the start of the game, which can open all of the other doors, but just one at a time, if the player wants to open a new door, it has to retrieve the key from the last door opened.
+This game is inspired by Alan Wake 2, where they use a flashlight/batteries mechanic to deal with the shadows, and the enemies are inspired by Doctor Who’s Weeping Angels.
